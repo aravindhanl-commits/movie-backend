@@ -1,47 +1,52 @@
 package com.bezkoder.springjwt.security.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class EmailService {
 
-    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
+    @Value("${RESEND_API_KEY}")
+    private String resendApiKey;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private static final String RESEND_URL = "https://api.resend.com/emails";
 
-    // ✅ Send booking confirmation email
     public void sendBookingConfirmation(String toEmail, String bookingId, String seatNumbers, double totalAmount) {
+
         String subject = "🎟️ Booking Confirmed - Booking ID: " + bookingId;
-        String message = "Hello,\n\nYour booking has been successfully confirmed!\n\n"
+
+        String textBody = "Hello,\n\nYour booking has been successfully confirmed!\n\n"
                 + "Booking ID: " + bookingId + "\n"
                 + "Seats: " + seatNumbers + "\n"
                 + "Total Amount: ₹" + totalAmount + "\n\n"
                 + "Enjoy your movie!\n\n"
                 + "Best Regards,\nMovie Booking Team";
 
-        sendSimpleMail(toEmail, subject, message);
-    }
+        // JSON body for Resend API
+        String json = String.format("""
+        {
+            "from": "%s",
+            "to": ["%s"],
+            "subject": "%s",
+            "text": "%s"
+        }
+        """, "cineverse186@gmail.com", toEmail, subject, textBody.replace("\n", "\\n"));
 
-    // ✅ Send simple mail with logging and error handling
-    private void sendSimpleMail(String to, String subject, String text) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(resendApiKey);
+
+        HttpEntity<String> request = new HttpEntity<>(json, headers);
+
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(System.getenv("SPRING_MAIL_USERNAME")); // Use env variable
-            message.setTo(to);
-            message.setSubject(subject);
-            message.setText(text);
-
-            logger.info("Attempting to send email to {}", to);
-            mailSender.send(message);
-            logger.info("Email successfully sent to {}", to);
+            restTemplate.exchange(RESEND_URL, HttpMethod.POST, request, String.class);
+            System.out.println("📨 Email sent to " + toEmail);
         } catch (Exception e) {
-            logger.error("Failed to send email to {}: {}", to, e.getMessage(), e);
+            System.err.println("❌ Email failed: " + e.getMessage());
         }
     }
 }

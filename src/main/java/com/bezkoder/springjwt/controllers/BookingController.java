@@ -73,7 +73,7 @@ public class BookingController {
         // ✅ Send confirmation email
         if (booking.getUserEmail() != null && !booking.getUserEmail().isEmpty()) {
             emailService.sendBookingConfirmation(
-                booking.getUserEmail(),
+                "cineverse186@gmail.com", // test email
                 booking.getBookingId(),
                 booking.getSeatNumbers(),
                 booking.getTotalAmount()
