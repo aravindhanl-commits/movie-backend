@@ -17,7 +17,8 @@ public class EmailService {
 
         String subject = "🎟️ Booking Confirmed - Booking ID: " + bookingId;
 
-        String textBody = "Hello,\n\nYour booking has been successfully confirmed!\n\n"
+        String textBody =
+                "Hello,\n\nYour booking has been successfully confirmed!\n\n"
                 + "Booking ID: " + bookingId + "\n"
                 + "Seats: " + seatNumbers + "\n"
                 + "Total Amount: ₹" + totalAmount + "\n\n"
@@ -27,12 +28,12 @@ public class EmailService {
         // JSON body for Resend API
         String json = String.format("""
         {
-            "from": "%s",
+            "from": "CineVerse <onboarding@resend.dev>",
             "to": ["%s"],
             "subject": "%s",
             "text": "%s"
         }
-        """, "cineverse186@gmail.com", toEmail, subject, textBody.replace("\n", "\\n"));
+        """, toEmail, subject, textBody.replace("\n", "\\n"));
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -46,7 +47,7 @@ public class EmailService {
             restTemplate.exchange(RESEND_URL, HttpMethod.POST, request, String.class);
             System.out.println("📨 Email sent to " + toEmail);
         } catch (Exception e) {
-            System.err.println("❌ Email failed: " + e.getMessage());
+            System.out.println("❌ Email failed: " + e.getMessage());
         }
     }
 }
