@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/movies")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = {"http://localhost:8081","https://movie-frontend-tawny-theta.vercel.app/"})
 public class MovieController {
 
     private final MovieService movieService;

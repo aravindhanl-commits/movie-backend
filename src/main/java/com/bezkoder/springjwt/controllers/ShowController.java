@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/shows")
-@CrossOrigin(origins = "http://localhost:8081") // same as your MovieController
+@CrossOrigin(origins = {"http://localhost:8081","https://movie-frontend-tawny-theta.vercel.app/"}) // same as your MovieController
 public class ShowController {
 
     private final ShowService showService;
