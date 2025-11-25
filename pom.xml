@@ -115,7 +115,27 @@
     <artifactId>spring-boot-starter-mail</artifactId>
 </dependency>
 
+<!-- Testing (JUnit 5 + Mockito + MockMvc) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
+        <!-- For @WithMockUser, @MockBean, MockMvc security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Explicit Mockito (Optional but recommended) -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.8.0</version>
+            <scope>test</scope>
+        </dependency>
 
 	</dependencies>
 
