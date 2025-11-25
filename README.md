@@ -1,206 +1,174 @@
-# Spring Boot JWT Authentication example with Spring Security & Spring Data JPA
+🎬 Movie Ticket Booking System – Backend (Spring Boot)
 
-## User Registration, User Login and Authorization process.
-The diagram shows flow of how we implement User Registration, User Login and Authorization process.
+This is the backend service for the Movie Ticket Booking System, powered by Spring Boot, MySQL, JWT Authentication, and Railway deployment. It provides all APIs required for browsing movies, managing shows, booking seats, and sending confirmation emails.
 
-![spring-boot-jwt-authentication-spring-security-flow](spring-boot-jwt-authentication-spring-security-flow.png)
+🚀 Live Backend URL
 
-## Spring Boot Server Architecture with Spring Security
-You can have an overview of our Spring Boot Server with the diagram below:
+Base API URL: https://movie-backend-production-799d.up.railway.app/api
 
-![spring-boot-jwt-authentication-spring-security-architecture](spring-boot-jwt-authentication-spring-security-architecture.png)
+Example Endpoint:Movies: https://movie-backend-production-799d.up.railway.app/api/movies
 
-## Dependency
-– If you want to use PostgreSQL:
-```xml
-<dependency>
-  <groupId>org.postgresql</groupId>
-  <artifactId>postgresql</artifactId>
-  <scope>runtime</scope>
-</dependency>
-```
-– or MySQL:
-```xml
-<dependency>
-  <groupId>com.mysql</groupId>
-  <artifactId>mysql-connector-j</artifactId>
-  <scope>runtime</scope>
-</dependency>
-```
-## Configure Spring Datasource, JPA, App properties
-Open `src/main/resources/application.properties`
-- For PostgreSQL:
-```
-spring.datasource.url= jdbc:postgresql://localhost:5432/testdb
-spring.datasource.username= postgres
-spring.datasource.password= 123
+🏗️ Tech Stack
 
-spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation= true
-spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.PostgreSQLDialect
+Backend: Spring Boot 3, Spring Web, Spring Data JPA
 
-# Hibernate ddl auto (create, create-drop, validate, update)
-spring.jpa.hibernate.ddl-auto= update
+Authentication: Spring Security + JWT
 
-# App Properties
-bezkoder.app.jwtSecret= bezKoderSecretKey
-bezkoder.app.jwtExpirationMs= 86400000
-```
-- For MySQL
-```
-spring.datasource.url=jdbc:mysql://localhost:3306/testdb_spring?useSSL=false
+Database: MySQL
+
+Email Service: Spring Mail
+
+Deployment: Railway
+
+Build Tool: Maven
+
+📌 Core Features
+
+🔐 User Module
+
+User registration & login
+
+JWT-based authentication
+
+Booking history
+
+🎞️ Movie Module
+
+Add, update, delete movies
+
+Fetch movie list
+
+Movie posters, duration, genre, rating
+
+🎭 Theater Module
+
+Theater CRUD
+
+Seat layout configuration
+
+⏰ Show Module
+
+Shows mapped to movies & theaters
+
+Show timings management
+
+💺 Seat Booking Module
+
+Lock & reserve seats
+
+Prevent double booking using seat-level locking
+
+🎟️ Booking Module
+
+Ticket booking flow
+
+Price calculations
+
+Booking & cancellation handling
+
+💳 Payment Module
+
+Razorpay/Stripe integration (or mock payment)
+
+📩 Email Notification Module
+
+Booking confirmation emails
+
+Cancellation emails
+
+📁 Project Structure
+
+src
+├── main
+│   ├── java/com/app
+│   │   ├── controller
+│   │   ├── service
+│   │   ├── repository
+│   │   ├── model
+│   │   └── security (JWT implementation)
+│   └── resources
+│       ├── application.properties
+│       └── templates (optional)
+└── test/java/com/app (JUnit tests)
+
+⚙️ Environment Variables (Railway)
+
+Set these variables in Railway → Variables:
+
+DATABASE_URL=jdbc:mysql://...
+DB_USER=your-username
+DB_PASS=your-password
+JWT_SECRET=your-secret-key
+MAIL_USERNAME=your-email
+MAIL_PASSWORD=your-app-password
+
+▶️ Run Locally
+
+1️⃣ Clone the Repository
+
+git clone https://github.com/aravindhanl-commits/movie-backend.git
+cd movie-backend
+
+2️⃣ Configure Database
+
+Update application.properties:
+
+spring.datasource.url=jdbc:mysql://localhost:3306/moviedb
 spring.datasource.username=root
-spring.datasource.password=123456
+spring.datasource.password=yourpass
 
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
-spring.jpa.hibernate.ddl-auto=update
+3️⃣ Run the App
 
-# App Properties
-bezkoder.app.jwtSecret= ======================BezKoder=Spring===========================
-bezkoder.app.jwtExpirationMs=86400000
-```
-## Run Spring Boot application
-```
 mvn spring-boot:run
-```
 
-## Run following SQL insert statements
-```
-INSERT INTO roles(name) VALUES('ROLE_USER');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO roles(name) VALUES('ROLE_ADMIN');
-```
+Backend runs on:👉 http://localhost:8080
 
-For more detail, please visit:
-> [Secure Spring Boot with Spring Security & JWT Authentication](https://bezkoder.com/spring-boot-jwt-authentication/)
+🧪 Testing
 
-> [For MongoDB](https://bezkoder.com/spring-boot-jwt-auth-mongodb/)
+Unit Tests (JUnit + Mockito)
 
-## Refresh Token
+Service layer testing
 
-![spring-boot-refresh-token-jwt-example-flow](spring-boot-refresh-token-jwt-example-flow.png)
+Controller tests
 
-For instruction: [Spring Boot Refresh Token with JWT example](https://bezkoder.com/spring-boot-refresh-token-jwt/)
+Repository tests
 
-## More Practice:
-> [Spring Boot JWT Authentication example using HttpOnly Cookie](https://www.bezkoder.com/spring-boot-login-example-mysql/)
+Run tests:
 
-> [Spring Boot File upload example with Multipart File](https://bezkoder.com/spring-boot-file-upload/)
+mvn test
 
-> [Exception handling: @RestControllerAdvice example in Spring Boot](https://bezkoder.com/spring-boot-restcontrolleradvice/)
+🚀 Deployment (Railway)
 
-> [Spring Boot Repository Unit Test with @DataJpaTest](https://bezkoder.com/spring-boot-unit-test-jpa-repo-datajpatest/)
+Create a new Railway project
 
-> [Spring Boot Pagination & Sorting example](https://www.bezkoder.com/spring-boot-pagination-sorting-example/)
+Connect your GitHub repo
 
-> Validation: [Spring Boot Validate Request Body](https://www.bezkoder.com/spring-boot-validate-request-body/)
+Add environment variables
 
-> Documentation: [Spring Boot and Swagger 3 example](https://www.bezkoder.com/spring-boot-swagger-3/)
+Railway auto-builds & deploys
 
-> Caching: [Spring Boot Redis Cache example](https://www.bezkoder.com/spring-boot-redis-cache-example/)
+📌 API Examples
 
-Associations:
-> [Spring Boot One To Many example with Spring JPA, Hibernate](https://www.bezkoder.com/jpa-one-to-many/)
+✔ Get All Movies
 
-> [Spring Boot Many To Many example with Spring JPA, Hibernate](https://www.bezkoder.com/jpa-many-to-many/)
+GET /api/movies
 
-> [JPA One To One example with Spring Boot](https://www.bezkoder.com/jpa-one-to-one/)
+✔ Add Movie (Admin)
 
-Deployment:
-> [Deploy Spring Boot App on AWS – Elastic Beanstalk](https://www.bezkoder.com/deploy-spring-boot-aws-eb/)
+POST /api/movies
+Authorization: Bearer <token>
 
-> [Docker Compose Spring Boot and MySQL example](https://www.bezkoder.com/docker-compose-spring-boot-mysql/)
+✔ Book Seats
 
-## Fullstack Authentication
+POST /api/bookings
 
-> [Spring Boot + Vue.js JWT Authentication](https://bezkoder.com/spring-boot-vue-js-authentication-jwt-spring-security/)
+📝 Submission Requirements
 
-> [Spring Boot + Angular 8 JWT Authentication](https://bezkoder.com/angular-spring-boot-jwt-auth/)
+Full project pushed to GitHub
 
-> [Spring Boot + Angular 10 JWT Authentication](https://bezkoder.com/angular-10-spring-boot-jwt-auth/)
+Backend deployed on Railway
 
-> [Spring Boot + Angular 11 JWT Authentication](https://bezkoder.com/angular-11-spring-boot-jwt-auth/)
+Include environment variables
 
-> [Spring Boot + Angular 12 JWT Authentication](https://www.bezkoder.com/angular-12-spring-boot-jwt-auth/)
 
-> [Spring Boot + Angular 13 JWT Authentication](https://www.bezkoder.com/angular-13-spring-boot-jwt-auth/)
 
-> [Spring Boot + Angular 14 JWT Authentication](https://www.bezkoder.com/angular-14-spring-boot-jwt-auth/)
-
-> [Spring Boot + Angular 15 JWT Authentication](https://www.bezkoder.com/angular-15-spring-boot-jwt-auth/)
-
-> [Spring Boot + Angular 16 JWT Authentication](https://www.bezkoder.com/angular-16-spring-boot-jwt-auth/)
-
-> [Spring Boot + Angular 17 JWT Authentication](https://www.bezkoder.com/angular-17-spring-boot-jwt-auth/)
-
-> [Spring Boot + React JWT Authentication](https://bezkoder.com/spring-boot-react-jwt-auth/)
-
-## Fullstack CRUD App
-
-> [Vue.js + Spring Boot + H2 Embedded database example](https://www.bezkoder.com/spring-boot-vue-js-crud-example/)
-
-> [Vue.js + Spring Boot + MySQL example](https://www.bezkoder.com/spring-boot-vue-js-mysql/)
-
-> [Vue.js + Spring Boot + PostgreSQL example](https://www.bezkoder.com/spring-boot-vue-js-postgresql/)
-
-> [Angular 8 + Spring Boot + Embedded database example](https://www.bezkoder.com/angular-spring-boot-crud/)
-
-> [Angular 8 + Spring Boot + MySQL example](https://bezkoder.com/angular-spring-boot-crud/)
-
-> [Angular 8 + Spring Boot + PostgreSQL example](https://bezkoder.com/angular-spring-boot-postgresql/)
-
-> [Angular 10 + Spring Boot + MySQL example](https://bezkoder.com/angular-10-spring-boot-crud/)
-
-> [Angular 10 + Spring Boot + PostgreSQL example](https://bezkoder.com/angular-10-spring-boot-postgresql/)
-
-> [Angular 11 + Spring Boot + MySQL example](https://bezkoder.com/angular-11-spring-boot-crud/)
-
-> [Angular 11 + Spring Boot + PostgreSQL example](https://bezkoder.com/angular-11-spring-boot-postgresql/)
-
-> [Angular 12 + Spring Boot + Embedded database example](https://www.bezkoder.com/angular-12-spring-boot-crud/)
-
-> [Angular 12 + Spring Boot + MySQL example](https://www.bezkoder.com/angular-12-spring-boot-mysql/)
-
-> [Angular 12 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/angular-12-spring-boot-postgresql/)
-
-> [Angular 13 + Spring Boot + H2 Embedded Database example](https://www.bezkoder.com/spring-boot-angular-13-crud/)
-
-> [Angular 13 + Spring Boot + MySQL example](https://www.bezkoder.com/spring-boot-angular-13-mysql/)
-
-> [Angular 13 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/spring-boot-angular-13-postgresql/)
-
-> [Angular 14 + Spring Boot + H2 Embedded Database example](https://www.bezkoder.com/spring-boot-angular-14-crud/)
-
-> [Angular 14 + Spring Boot + MySQL example](https://www.bezkoder.com/spring-boot-angular-14-mysql/)
-
-> [Angular 14 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/spring-boot-angular-14-postgresql/)
-
-> [Angular 15 + Spring Boot + H2 Embedded Database example](https://www.bezkoder.com/spring-boot-angular-15-crud/)
-
-> [Angular 15 + Spring Boot + MySQL example](https://www.bezkoder.com/spring-boot-angular-15-mysql/)
-
-> [Angular 15 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/spring-boot-angular-15-postgresql/)
-
-> [Angular 16 + Spring Boot + H2 Embedded Database example](https://www.bezkoder.com/spring-boot-angular-16-crud/)
-
-> [Angular 16 + Spring Boot + MySQL example](https://www.bezkoder.com/spring-boot-angular-16-mysql/)
-
-> [Angular 16 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/spring-boot-angular-16-postgresql/)
-
-> [Angular 17 + Spring Boot + H2 Embedded Database example](https://www.bezkoder.com/spring-boot-angular-17-crud/)
-
-> [Angular 17 + Spring Boot + MySQL example](https://www.bezkoder.com/spring-boot-angular-17-mysql/)
-
-> [Angular 17 + Spring Boot + PostgreSQL example](https://www.bezkoder.com/spring-boot-angular-17-postgresql/)
-
-> [React + Spring Boot + MySQL example](https://bezkoder.com/react-spring-boot-crud/)
-
-> [React + Spring Boot + PostgreSQL example](https://bezkoder.com/spring-boot-react-postgresql/)
-
-> [React + Spring Boot + MongoDB example](https://bezkoder.com/react-spring-boot-mongodb/)
-
-Run both Back-end & Front-end in one place:
-> [Integrate Angular with Spring Boot Rest API](https://bezkoder.com/integrate-angular-spring-boot/)
-
-> [Integrate React.js with Spring Boot Rest API](https://bezkoder.com/integrate-reactjs-spring-boot/)
-
-> [Integrate Vue.js with Spring Boot Rest API](https://bezkoder.com/integrate-vue-spring-boot/)
